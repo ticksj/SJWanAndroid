@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 abstract class BaseFragment : Fragment() {
 
     abstract var layoutId: Int;
+    abstract fun initData();
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,5 +22,9 @@ abstract class BaseFragment : Fragment() {
         return inflater.inflate(layoutId, container, false);
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initData()
+    }
 
 }

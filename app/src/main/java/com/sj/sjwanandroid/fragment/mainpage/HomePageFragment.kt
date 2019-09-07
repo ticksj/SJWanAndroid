@@ -1,5 +1,4 @@
-import com.foxhis.c_network.request.CommonRequest
-import com.foxhis.c_network.request.RequestParams
+
 import com.sj.sjwanandroid.BaseFragment
 import com.sj.sjwanandroid.R
 
@@ -9,6 +8,6 @@ class HomePageFragment : BaseFragment() {
 
 
     override fun initData() {
-    
+
     }
 }
