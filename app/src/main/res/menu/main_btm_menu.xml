@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homePageFragment"
+        android:icon="@drawable/homepage_selected"
+        android:title="首页" />
+    <item
+        android:id="@+id/projectFragment"
+        android:icon="@drawable/project_selected"
+        android:title="项目" />
+    <item
+        android:id="@+id/androidSystemFragment"
+        android:icon="@drawable/system_selected"
+        android:title="体系" />
+    <item
+        android:id="@+id/wechatFragment"
+        android:icon="@drawable/wechat_selected"
+        android:title="公众号" />
+    <item
+        android:id="@+id/navigationFragment"
+        android:icon="@drawable/navigation_selected"
+        android:title="导航" />
+</menu>
