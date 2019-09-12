@@ -5,32 +5,29 @@ import com.foxhis.c_network.listener.ResultListener
 import com.foxhis.c_network.request.CommonRequest
 import com.foxhis.c_network.request.RequestParams
 import com.foxhis.c_network.response.CommonCallBack
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.sj.sjwanandroid.bean.ArticleData
-import com.sj.sjwanandroid.bean.BaseBean
+import org.json.JSONObject
+
 
 object HttpUtils {
 
-    fun<T> getData(url:String,resultListener: ResultListener<T>){
-        CommonOkHttpClient.sendRequest(CommonRequest.createGetRequest(url, RequestParams()), CommonCallBack(object :
-            ResultListener<String> {
-            override fun onSuccess(result: String) {
-                val type = object : TypeToken<BaseBean<ArticleData>>() {}.type
-                var baseBean = Gson().fromJson<BaseBean<ArticleData>>(result.toString(), type)
-                if (0==baseBean.errorCode) {
-                    resultListener.onSuccess(baseBean.data as T)
-                }else{
-                    resultListener.onFailure(HttpException(baseBean.errorCode.toString(),baseBean.errorMsg))
+    fun getData(url: String, resultListener: ResultListener) {
+        CommonOkHttpClient.sendRequest(
+            CommonRequest.createGetRequest(url, RequestParams()),
+            CommonCallBack(object :
+                ResultListener {
+                override fun onSuccess(result: Any?) {
+                    var jsonObject = JSONObject(result.toString())
+                    when{
+                        jsonObject["errorCode"]==0 -> resultListener.onSuccess(jsonObject["data"])
+                        else -> resultListener.onFailure(HttpException(jsonObject["errorCode"].toString(),jsonObject["errorMsg"].toString()))
+                    }
                 }
-            }
-            override fun onFailure(httpException: HttpException?) {
-                resultListener.onFailure(httpException)
-            }
-        }))
-
+                override fun onFailure(httpException: HttpException?) {
+                    resultListener.onFailure(httpException)
+                }
+            })
+        )
     }
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.sj.sjwanandroid.bean
 import java.io.Serializable
+
 data class BaseBean<T>(
     val errorCode:Int,
     val errorMsg:String,

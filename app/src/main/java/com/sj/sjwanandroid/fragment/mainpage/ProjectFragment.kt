@@ -4,6 +4,9 @@ import com.sj.sjwanandroid.R
 class ProjectFragment : BaseFragment() {
     override var layoutId = R.layout.fragment_project
 
+    override fun initView() {
+
+    }
     override fun initData() {
 
     }
