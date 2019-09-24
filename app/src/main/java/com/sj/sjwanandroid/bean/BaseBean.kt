@@ -1,19 +1,21 @@
 package com.sj.sjwanandroid.bean
+
 import java.io.Serializable
 
 data class BaseBean<T>(
-    val errorCode:Int,
-    val errorMsg:String,
-    val data:T
+    val errorCode: Int,
+    val errorMsg: String,
+    val data: T
 )
 
+//-------------Main---------------
 data class ArticleData(
-    val offset:Int,
-    val over:Boolean,
-    val pageCount:Int,
-    val size:Int,
-    val total:Int,
-    val datas:MutableList<Article>
+    val offset: Int,
+    val over: Boolean,
+    val pageCount: Int,
+    val size: Int,
+    val total: Int,
+    val datas: MutableList<Article>
 )
 
 data class Article(
@@ -40,8 +42,8 @@ data class Article(
     var userId: Int,
     var visible: Int,
     var zan: Int
-//    var isTop: Boolean,
-//    var bannerData: List<Banner>
+
+
 )
 
 data class Tag(
@@ -49,6 +51,36 @@ data class Tag(
     var url: String
 )
 
+data class Banner(
+    var desc: String,
+    var id: Int,
+    var imagePath: String,
+    var isVisible: Int,
+    var order: Int,
+    var title: String,
+    var type: Int,
+    var url: String
+)
+
+//-------------Project---------------
+//-------------AndroidSystem---------------
+data class ASystem(
+    var children: MutableList<Children>
+)
+
+data class Children(
+    var children: MutableList<Children>,
+    var courseId: Int,
+    var id: Int,
+    var name: String,
+    var order: Int,
+    var parentChapterId: Int,
+    var userControlSetTop: Boolean,
+    var visible: Int
+
+)
+//-------------WeChat---------------
+//-------------Navigation---------------
 
 
 data class Page<T>(
@@ -78,13 +110,3 @@ data class Navigation(
     var name: String
 )
 
-data class Banner(
-    var desc: String,
-    var id: Int,
-    var imagePath: String,
-    var isVisible: Int,
-    var order: Int,
-    var title: String,
-    var type: Int,
-    var url: String
-)

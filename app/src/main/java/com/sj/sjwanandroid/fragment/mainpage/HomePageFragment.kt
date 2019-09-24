@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.item_home_banner.view.*
 class HomePageFragment : BaseFragment() {
     override var layoutId = R.layout.fragment_homepage;
 
-    val imageUrl = "https://www.baidu.com/img/bd_logo1.png"
     val baseUrl = "https://www.wanandroid.com/article/list/"
     var page = 0
     lateinit var adapter: HomeAdapter
@@ -32,8 +31,6 @@ class HomePageFragment : BaseFragment() {
     override fun initView() {
         vpAdapter = VPAdapter(mutableListOf(),context!!)
         vp.adapter = vpAdapter
-
-
         rv.layoutManager = LinearLayoutManager(activity)
         adapter = HomeAdapter(mutableListOf())
         rv.adapter = adapter
@@ -50,17 +47,15 @@ class HomePageFragment : BaseFragment() {
     }
 
     override fun initData() {
-
         getBanner()
         getArticle()
-
     }
 
     private fun getBanner() {
-        var url = "https://www.wanandroid.com/banner/json"
-        HttpUtils.getData(url, object : ResultListener {
+        HttpUtils.getBanner(object : ResultListener {
             override fun onSuccess(result: Any?) {
-                var bannerList = Gson().fromJson(result.toString(),object :TypeToken<List<Banner>>(){}.type) as MutableList<Banner>
+                var bannerList = Gson().fromJson(result.toString(),object :
+                    TypeToken<List<Banner>>(){}.type) as MutableList<Banner>
                 vpAdapter.bannerList = bannerList
                 vpAdapter.notifyDataSetChanged()
             }
@@ -70,25 +65,20 @@ class HomePageFragment : BaseFragment() {
     }
 
     private fun getArticle() {
-        var url = baseUrl + page + "/json"
-        Log.e("Tag", "--------$url")
-
-        HttpUtils.getData(url, object : ResultListener {
+        HttpUtils.getNewArticle(page,object : ResultListener {
             override fun onSuccess(result: Any?) {
-            var articleData = Gson().fromJson(result.toString(),ArticleData::class.java) as ArticleData
+                var articleData = Gson().fromJson(result.toString(),
+                    ArticleData::class.java) as ArticleData
                 adapter.dataList.addAll(articleData.datas)
                 adapter.notifyDataSetChanged()
             }
-
             override fun onFailure(httpException: HttpException?) {
             }
-
         })
     }
 
 
     class VPAdapter(var bannerList: MutableList<Banner>, var context: Context) : PagerAdapter() {
-
         override fun instantiateItem(container: ViewGroup, position: Int): View {
             var view = View.inflate(context, R.layout.item_home_banner, null)
             var imagePath = bannerList[position].imagePath
@@ -100,9 +90,7 @@ class HomePageFragment : BaseFragment() {
 
         override fun isViewFromObject(view: View, `object`: Any) = view == `object`
 
-        override fun getCount(): Int {
-            return bannerList.size
-        }
+        override fun getCount() = bannerList.size
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
             container.removeView(`object` as View?)
